@@ -1,4 +1,4 @@
-# Quick Directory Aliases
+# Advanced Quick Directory Aliases
 
 Enables quick directory aliases and navigation. Allows for easy and consistent navigation between disparate directories.
 
