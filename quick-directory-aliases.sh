@@ -88,6 +88,22 @@ d()
         shift
     done
 
+    if $_d_removeDir;
+    then
+        if [ "$#" -eq "0" ]
+        then
+            grep -v $_d_curDir $_d_mapFile > temp && mv temp $_d_mapFile
+            if grep -qF "$_d_curDir" $_d_mapFile;
+            then
+                printf "Error removing $_d_curDir\n"
+                return 1
+            else
+                printf "$_d_curDir successfully removed\n"
+                return $?
+            fi
+        fi
+    fi
+
     if [ -z "$_d_aliasName" ]
     then
         _d_usage
@@ -220,4 +236,3 @@ then
 
     complete -F _d_setupAutoComplete_bash d >/dev/null 2>&1
 fi
-
