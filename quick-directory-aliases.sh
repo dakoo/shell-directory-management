@@ -14,7 +14,7 @@
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License.
+
 
 # NOTE: will be sourced by interactive shell and will affect the caller's context, do not exit!
 
@@ -29,6 +29,7 @@ _d_usage()
     printf "Add:      d + aliasName \"tag\"\n" >&2
     printf "Remove:   d - aliasName\n" >&2
     printf "ExcuteCommand: d e aliasName command \n" >&2
+    printf "ExcuteCommandOnNewTab: d re aliasName command \n" >&2
     printf "Navigate: d aliasName\n" >&2
     printf "List all: d\n" >&2
     printf "Clear: d c all\n" >&2
@@ -53,6 +54,7 @@ d()
     _d_addDir=false
     _d_removeDir=false
     _d_excuteCommand=false
+    _d_excuteCommandNewTab=false
     _d_clear=false
     _d_help=false
     _d_aliasName=
@@ -76,6 +78,7 @@ d()
             +) _d_addDir=true;;
             -) _d_removeDir=true;;
             e) _d_excuteCommand=true;;
+            r) _d_excuteCommandNewTab=true;;
             c) _d_clear=true;;
             ?) _d_help=true;;
             -h) _d_usage; return 0;;
@@ -99,13 +102,26 @@ d()
         then
 	    #Write the new alias to our map file
             if [ "$#" -eq "2" ]
-	    then
-                printf "$_d_aliasName = $_d_curDir -> $2\n" >> $_d_mapFile
-                return $? 
+            ten="          " 
+            onehundredforty="$ten$ten$ten$ten$ten$ten$ten$ten$ten$ten$ten$ten$ten$ten" 
+            _var="$_d_aliasName = $_d_curDir ->"
+            _var_len=${#_var}
+            then
+                if [ $_var_len -ge 140 ]
+                then
+                    printf "$_var $2\n" >> $_d_mapFile
+                else
+                    printf "${_var:0:140}${onehundredforty:0:$((140 - ${#_var}))}$2\n" >> $_d_mapFile
+                fi
 	    else
-                printf "$_d_aliasName = $_d_curDir -> .\n" >> $_d_mapFile
-                return $? 
-	    fi
+                if [ $_var_len -ge 140 ]
+                then
+                    printf "$_var .\n" >> $_d_mapFile
+                else
+                    printf "${_var:0:140}${onehundredforty:0:$((140 - ${#_var}))}$2\n" >> $_d_mapFile
+                fi
+            fi
+	    return $? 
         else
             printf "The map alias $_d_aliasName already exists:\n$_d_aliasRow\n"
             return 1
@@ -204,3 +220,4 @@ then
 
     complete -F _d_setupAutoComplete_bash d >/dev/null 2>&1
 fi
+
