@@ -13,7 +13,7 @@ Enables quick directory aliases and navigation. Allows for easy and consistent n
 
 ## Installation
 
-1. Download the [script](https://github.com/mcwoodle/shell-directory-management/blob/master/quick-directory-aliases.sh)
+1. Download the [script](https://github.com/dakoo/shell-directory-management/blob/master/quick-directory-aliases.sh)
 1. Source the script into your current shell (add this to your shell startup script to always have the command available)
 1. Done
 
@@ -42,6 +42,13 @@ printf "\n. $SCRIPT_DIRECTORY/quick-directory-aliases.sh\n" >> $RC_FILE
 ```
 > Note: changes take effect immediately across terminals/shells.
 
+Also you can add a tag to the alias.
+
+```bash
+% cd /any/really/long/or/short/directory/path/thats/hardoreasy/to/remember
+% d + shortAliasName "some tag or comment"
+```
+
 #### Navigate to an alias
 ```bash
 % d shortAliasName
@@ -58,9 +65,72 @@ printf "\n. $SCRIPT_DIRECTORY/quick-directory-aliases.sh\n" >> $RC_FILE
 #### See all aliases
 ```bash
 % d
-workspace = /home/mcwoodle/workspaces/someWorkspaceDirectory
-bin = /usr/bin
-nhl = /home/mcwoodle/go/leafs/go
+workspace = /home/mcwoodle/workspaces/someWorkspaceDirectory -> workspace
+bin = /usr/bin -> bin folder
+nhl = /home/mcwoodle/go/leafs/go -> .
+```
+
+#### Clear all aliases
+
+```bash
+% d c all
+```
+
+#### Help 
+
+```bash
+% d ?
+```
+
+#### Execute a command in the alias
+
+##### Run intellij idea in the folder
+
+```bash
+% d e workspace ij
+```
+
+##### Run sourcetree in the folder
+
+```bash
+% d e workspace st
+```
+
+##### Run finder in the folder(mac)
+
+```bash
+% d e workspace op
+```
+
+##### Custom Command in the folder
+
+```bash
+% d e workspace pwd
+```
+
+If the command consists of multiple words, wrap it with double quotes.
+
+```bash
+% d e workspace "ls -al"
+```
+
+##### Customize the embedded commands
+
+You could modify the following block of the script.
+
+```
+    if $_d_excuteCommand;
+    then
+        _d_cmd=`printf "$_d_aliasRow" | sed -e "s,.* = \(.*\) -> .*,\1,"`
+        printf "cd $_d_cmd\n"
+        case "$2" in
+            ij) /usr/local/bin/idea $_d_cmd;;
+            st) stree $_d_cmd;;
+            op) open $_d_cmd;;          
+            *) "$2" $_d_cmd;;
+        esac
+        return 1
+    fi
 ```
 
 #### Autocomplete
