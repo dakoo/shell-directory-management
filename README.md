@@ -62,12 +62,17 @@ Also you can add a tag to the alias.
 % d - shortAliasName
 ```
 
+#### Remove an alias by the current directory
+```bash
+% d -
+```
+
 #### See all aliases
 ```bash
 % d
-workspace = /home/mcwoodle/workspaces/someWorkspaceDirectory -> workspace
-bin = /usr/bin -> bin folder
-nhl = /home/mcwoodle/go/leafs/go -> .
+workspace = /home/mcwoodle/workspaces/someWorkspaceDirectory ->             workspace
+bin = /usr/bin ->                                                           bin folder
+nhl = /home/mcwoodle/go/leafs/go ->                                         .
 ```
 
 #### Clear all aliases
