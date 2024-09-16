@@ -22,11 +22,11 @@ Enables quick directory aliases and navigation. Allows for easy and consistent n
 > Note: Before running the following, change `RC_FILE` to match your preferred shell's rc file, or any other file that you source when a new shell/terminal is created.
 
 ```bash
-RC_FILE=~/.bashrc
+RC_FILE=~/.zshrc
 SCRIPT_DIRECTORY=~/scripts
 
 mkdir -p $SCRIPT_DIRECTORY
-wget -O $SCRIPT_DIRECTORY/quick-directory-aliases.sh https://raw.githubusercontent.com/mcwoodle/shell-directory-management/master/quick-directory-aliases.sh
+curl -o $SCRIPT_DIRECTORY/quick-directory-aliases.sh https://raw.githubusercontent.com/dakoo/shell-directory-management/master/quick-directory-aliases.sh
 printf "\n. $SCRIPT_DIRECTORY/quick-directory-aliases.sh\n" >> $RC_FILE
 . $RC_FILE
 ```
